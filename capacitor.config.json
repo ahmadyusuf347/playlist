@@ -1,0 +1,9 @@
+{
+  "appId": "com.yusuf.playlist",
+  "appName": "Playlist Yusuf",
+  "webDir": "www",
+  "backgroundColor": "#0f0b17",
+  "android": {
+    "allowMixedContent": false
+  }
+}

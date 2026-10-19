@@ -1,0 +1,1682 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Playlist Yusuf</title>
+    <style>
+      :root {
+        --g: #02c39a;
+        --p: #7b2cbf;
+        --bg: #0f0b17;
+        --sf: #1a1326;
+        --sf2: #261c37;
+        --tx: #f5f2fa;
+        --mu: #a99fbd;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background: var(--bg);
+        color: var(--tx);
+        font-family:
+          Inter,
+          system-ui,
+          -apple-system,
+          "Segoe UI",
+          sans-serif;
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        grid-template-rows: 1fr auto;
+        gap: 8px;
+        padding: 8px;
+        padding-top: calc(8px + env(safe-area-inset-top, 0px));
+        padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+        overflow: hidden;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+      }
+      svg {
+        width: 1em;
+        height: 1em;
+        fill: currentColor;
+      }
+      .side {
+        background: var(--sf);
+        border-radius: 12px;
+        padding: 20px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        font-size: 20px;
+        padding: 0 10px 18px;
+      }
+      .brand i {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--g), var(--p));
+        display: grid;
+        place-items: center;
+        font-size: 18px;
+        color: #0f0b17;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 10px;
+        border-radius: 8px;
+        color: var(--mu);
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .nav svg {
+        font-size: 24px;
+      }
+      .nav.on,
+      .nav:hover {
+        color: var(--tx);
+      }
+      .main {
+        background: linear-gradient(
+          180deg,
+          color-mix(in srgb, var(--p) 55%, var(--sf)) 0,
+          var(--sf) 320px
+        );
+        border-radius: 12px;
+        overflow-y: auto;
+        min-width: 0;
+      }
+      .hero {
+        display: flex;
+        align-items: flex-end;
+        gap: 22px;
+        padding: 40px 28px 20px;
+      }
+      .art {
+        width: 180px;
+        height: 180px;
+        border-radius: 0;
+        background: linear-gradient(135deg, var(--p), var(--g));
+        display: grid;
+        place-items: center;
+        font-size: 72px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
+        flex: none;
+      }
+      .hero small {
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 5vw, 56px);
+        font-weight: 900;
+        line-height: 1.1;
+        margin: 6px 0 10px;
+      }
+      .hero p {
+        font-size: 14px;
+        color: var(--mu);
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 12px 28px;
+      }
+      .big {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: var(--g);
+        color: #0f0b17;
+        font-size: 26px;
+        transition: transform 0.15s;
+      }
+      .big:hover {
+        transform: scale(1.06);
+      }
+      .srch {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--sf2);
+        border-radius: 99px;
+        padding: 8px 14px;
+        max-width: 240px;
+      }
+      .srch input {
+        background: none;
+        border: 0;
+        outline: 0;
+        color: var(--tx);
+        font: inherit;
+        font-size: 14px;
+        width: 100%;
+      }
+      .srch svg {
+        color: var(--mu);
+        font-size: 18px;
+      }
+      .lst {
+        padding: 0 14px 24px;
+      }
+      .hd,
+      .row {
+        display: grid;
+        grid-template-columns: 36px 1fr 60px 36px;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 14px;
+        border-radius: 6px;
+      }
+      .hd {
+        color: var(--mu);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        border-bottom: 1px solid var(--sf2);
+        border-radius: 0;
+        margin-bottom: 6px;
+      }
+      .row {
+        cursor: pointer;
+      }
+      .row:hover {
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .row .n {
+        color: var(--mu);
+        text-align: center;
+        font-size: 14px;
+        display: grid;
+        place-items: center;
+      }
+      .row .ti {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+      .cv {
+        width: 42px;
+        height: 42px;
+        border-radius: 100%;
+        flex: none;
+        background-color: var(--sf2);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .row b {
+        display: block;
+        font-size: 15px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .row span {
+        font-size: 13px;
+        color: var(--mu);
+      }
+      .row.on b,
+      .row.on .n {
+        color: var(--g);
+      }
+      .row .d {
+        font-size: 13px;
+        color: var(--mu);
+        text-align: right;
+      }
+      .like {
+        color: var(--mu);
+        font-size: 20px;
+      }
+      .like.on {
+        color: var(--g);
+      }
+      .msg {
+        margin: 10px 28px;
+        padding: 14px;
+        border-radius: 10px;
+        background: var(--sf2);
+        color: var(--mu);
+        font-size: 14px;
+        display: none;
+      }
+      .pl {
+        grid-column: 1/-1;
+        background: var(--sf);
+        border-radius: 12px;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        align-items: center;
+        gap: 16px;
+        padding: 12px 18px;
+      }
+      .inf {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+      .inf .cv {
+        width: 54px;
+        height: 54px;
+      }
+      .inf b {
+        display: block;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .inf span {
+        font-size: 12px;
+        color: var(--mu);
+      }
+      .ctr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      }
+      .btns {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .ib {
+        font-size: 22px;
+        color: var(--mu);
+        position: relative;
+      }
+      .ib:hover {
+        color: var(--tx);
+      }
+      .ib.on {
+        color: var(--g);
+      }
+      .ib.on:after {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--g);
+      }
+      .ib.pp {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--tx);
+        color: #0f0b17;
+        font-size: 20px;
+      }
+      .sk {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        font-size: 11px;
+        color: var(--mu);
+      }
+      .sk span {
+        width: 36px;
+        text-align: center;
+      }
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        flex: 1;
+        height: 4px;
+        border-radius: 9px;
+        background: linear-gradient(
+          90deg,
+          var(--g) var(--v, 0%),
+          #4a3d63 var(--v, 0%)
+        );
+        outline: 0;
+        cursor: pointer;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #fff;
+        opacity: 0;
+      }
+      input[type="range"]:hover::-webkit-slider-thumb {
+        opacity: 1;
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 12px;
+        height: 12px;
+        border: 0;
+        border-radius: 50%;
+        background: #fff;
+      }
+      .vol {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: flex-end;
+        font-size: 20px;
+        color: var(--mu);
+      }
+      .vol input {
+        max-width: 110px;
+      }
+      .viz {
+        display: none;
+        align-items: flex-end;
+        gap: 3px;
+        height: 64px;
+        width: 100%;
+        max-width: 340px;
+      }
+      .viz i {
+        flex: 1;
+        height: 100%;
+        border-radius: 0;
+        background: linear-gradient(0deg, var(--p), var(--g));
+        transform-origin: bottom;
+        transform: scaleY(0.04);
+      }
+      .cls {
+        display: none;
+        font-size: 30px;
+        color: var(--tx);
+      }
+      @media (max-width: 820px) {
+        body {
+          grid-template-columns: 1fr;
+          gap: 6px;
+          padding: 0;
+          padding-top: env(safe-area-inset-top, 0px);
+        }
+        .side,
+        .srch,
+        .pl .vol {
+          display: none;
+        }
+        .main {
+          border-radius: 0;
+        }
+        .hero {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 28px 16px 12px;
+        }
+        .art {
+          width: 150px;
+          height: 150px;
+          font-size: 60px;
+        }
+        .bar {
+          padding: 8px 16px;
+          justify-content: center;
+        }
+        .lst {
+          padding: 0 6px 16px;
+        }
+        .hd {
+          display: none;
+        }
+        .row {
+          grid-template-columns: 28px 1fr 44px 32px;
+          gap: 8px;
+          padding: 8px;
+        }
+        .pl {
+          grid-template-columns: 1fr auto;
+          border-radius: 16px 16px 0 0;
+          padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px));
+          gap: 8px 12px;
+        }
+        .ctr {
+          display: contents;
+        }
+        .btns {
+          grid-column: 2;
+          grid-row: 1;
+          gap: 10px;
+        }
+        .btns .x {
+          display: none;
+        }
+        .sk {
+          grid-column: 1/-1;
+          grid-row: 2;
+        }
+        .inf .cv {
+          width: 46px;
+          height: 46px;
+        }
+        .pl.full {
+          position: fixed;
+          inset: 0;
+          z-index: 50;
+          border-radius: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 22px;
+          padding: calc(16px + env(safe-area-inset-top, 0px)) 24px
+            calc(24px + env(safe-area-inset-bottom, 0px));
+          background: linear-gradient(
+            180deg,
+            #5a189a 0,
+            #2a1245 45%,
+            #0f0b17 100%
+          );
+          animation: up 0.3s ease;
+        }
+        @keyframes up {
+          from {
+            transform: translateY(40px);
+            opacity: 0;
+          }
+          to {
+            transform: none;
+            opacity: 1;
+          }
+        }
+        .pl.full .cls {
+          display: grid;
+          position: absolute;
+          top: calc(12px + env(safe-area-inset-top, 0px));
+          left: 14px;
+        }
+        .pl.full .inf {
+          flex-direction: column;
+          text-align: center;
+          width: 100%;
+          gap: 18px;
+        }
+        .pl.full .inf .cv {
+          width: min(84vw, 360px);
+          height: auto;
+          aspect-ratio: 1;
+          max-height: 44vh;
+          border-radius: 0;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          box-shadow: 0 16px 50px rgba(0, 0, 0, 0.55);
+        }
+        .pl.full .inf b {
+          font-size: 22px;
+        }
+        .pl.full .inf span {
+          font-size: 15px;
+        }
+        .pl.full .viz {
+          display: flex;
+        }
+        .pl.full .ctr {
+          display: flex;
+          flex-direction: column-reverse;
+          width: 100%;
+          gap: 18px;
+        }
+        .pl.full .btns {
+          gap: 22px;
+        }
+        .pl.full .btns .x {
+          display: grid;
+        }
+        .pl.full .btns .ib {
+          font-size: 26px;
+        }
+        .pl.full .ib.pp {
+          width: 68px;
+          height: 68px;
+          font-size: 30px;
+          background: var(--g);
+        }
+        .pl.full .sk {
+          grid-row: auto;
+        }
+        .pl.full .vol {
+          display: flex;
+          width: 100%;
+          max-width: 340px;
+          justify-content: center;
+        }
+        .pl.full .vol input {
+          max-width: none;
+        }
+      }
+
+      /* ===== Lirik berjalan ===== */
+      .lw {
+        display: none;
+        position: relative;
+        min-height: 0;
+      }
+      .lc {
+        position: absolute;
+        inset: 0;
+        overflow-y: auto;
+        padding: 40vh 28px;
+        scrollbar-width: none;
+        -webkit-mask-image: linear-gradient(
+          180deg,
+          transparent 0,
+          #000 12%,
+          #000 88%,
+          transparent 100%
+        );
+        mask-image: linear-gradient(
+          180deg,
+          transparent 0,
+          #000 12%,
+          #000 88%,
+          transparent 100%
+        );
+      }
+      .lc::-webkit-scrollbar {
+        display: none;
+      }
+      .ll {
+        font-size: clamp(22px, 2.6vw, 34px);
+        font-weight: 800;
+        line-height: 1.3;
+        padding: 8px 0;
+        color: rgba(245, 242, 250, 0.3);
+        cursor: pointer;
+        transition:
+          color 0.3s,
+          transform 0.3s;
+        transform-origin: left center;
+      }
+      .ll:hover {
+        color: rgba(245, 242, 250, 0.7);
+      }
+      .ll.past {
+        color: rgba(245, 242, 250, 0.55);
+      }
+      .ll.on {
+        color: #fff;
+        transform: scale(1.03);
+      }
+      .ll.plain {
+        cursor: default;
+        color: rgba(245, 242, 250, 0.8);
+      }
+      .lm {
+        color: var(--mu);
+        font-size: 15px;
+        font-weight: 500;
+        padding: 8px 0;
+      }
+      @media (min-width: 821px) {
+        body.ly .main {
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        body.ly .main > .hero,
+        body.ly .main > .bar,
+        body.ly .main > .lst {
+          display: none;
+        }
+        body.ly .main > .lw {
+          display: block;
+          flex: 1;
+          min-height: 0;
+        }
+      }
+      @media (max-width: 820px) {
+        .ll {
+          font-size: 24px;
+        }
+        .lc {
+          padding: 30vh 6px;
+        }
+        .pl.full.ly {
+          justify-content: flex-start;
+          gap: 12px;
+          padding-top: calc(56px + env(safe-area-inset-top, 0px));
+        }
+        .pl.full.ly .inf .cv,
+        .pl.full.ly .viz {
+          display: none;
+        }
+        .pl.full.ly .lw {
+          display: block;
+          flex: 1;
+          min-height: 0;
+          width: 100%;
+        }
+        .pl.full.ly .inf {
+          gap: 2px;
+        }
+        .pl.full.ly .ib.pp {
+          width: 56px;
+          height: 56px;
+        }
+      }
+      /* ===== Cover piringan vinyl (bulat penuh + berputar saat lagu diputar) ===== */
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      #pc {
+        position: relative;
+        border-radius: 50%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        background-size: cover;
+        animation: spin 6s linear infinite;
+        animation-play-state: paused;
+        box-shadow:
+          0 0 0 3px #111,
+          0 6px 20px rgba(0, 0, 0, 0.5);
+      }
+      body.playing #pc {
+        animation-play-state: running;
+      }
+      /* alur/groove piringan */
+      #pc::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background:
+          repeating-radial-gradient(
+            circle at center,
+            rgba(0, 0, 0, 0) 0 3px,
+            rgba(0, 0, 0, 0.18) 3px 4px
+          ),
+          conic-gradient(
+            from 0deg,
+            rgba(255, 255, 255, 0) 0deg,
+            rgba(255, 255, 255, 0.22) 40deg,
+            rgba(255, 255, 255, 0) 90deg,
+            rgba(255, 255, 255, 0) 180deg,
+            rgba(255, 255, 255, 0.22) 220deg,
+            rgba(255, 255, 255, 0) 270deg
+          );
+        pointer-events: none;
+      }
+      /* lubang tengah piringan */
+      #pc::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 18%;
+        height: 18%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: var(--bg);
+        box-shadow:
+          0 0 0 3px rgba(0, 0, 0, 0.55),
+          inset 0 0 4px rgba(0, 0, 0, 0.8);
+      }
+      /* tampilan penuh (mobile): tetap lingkaran sempurna */
+      @media (max-width: 820px) {
+        .pl.full #pc {
+          width: min(84vw, 360px, 44vh);
+          height: auto;
+          max-height: none;
+          aspect-ratio: 1 / 1;
+          box-shadow:
+            0 0 0 5px #111,
+            0 16px 50px rgba(0, 0, 0, 0.55);
+        }
+      }
+      /* cover di daftar lagu: kotak biasa, tidak berputar */
+      .row .cv {
+        border-radius: 0;
+        background-size: contain !important;
+      }
+      /* ===== Header playlist menempel di atas saat di-scroll ===== */
+      .stk {
+        position: sticky;
+        top: 0;
+        height: 0;
+        z-index: 20;
+      }
+      .stk-in {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 20px;
+        background: color-mix(in srgb, var(--p) 55%, var(--sf));
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        transform: translateY(-100%);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          transform 0.2s,
+          opacity 0.2s;
+      }
+      .main.sc .stk-in {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .stk-art {
+        width: 40px;
+        height: 40px;
+        flex: none;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        background: linear-gradient(135deg, var(--p), var(--g));
+      }
+      .stk-name {
+        flex: 1;
+        min-width: 0;
+        font-size: 16px;
+        font-weight: 800;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .stk-play {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        flex: none;
+      }
+      body.ly .main > .stk {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute">
+      <defs>
+        <symbol id="i-play" viewBox="0 0 24 24">
+          <path
+            d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"
+          />
+        </symbol>
+        <symbol id="i-pause" viewBox="0 0 24 24">
+          <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+        </symbol>
+        <symbol id="i-next" viewBox="0 0 24 24">
+          <path
+            d="M6 5.2v13.6a.8.8 0 0 0 1.2.7l10-6.8a.8.8 0 0 0 0-1.4l-10-6.8A.8.8 0 0 0 6 5.2zM18 5h2v14h-2z"
+          />
+        </symbol>
+        <symbol id="i-prev" viewBox="0 0 24 24">
+          <path
+            d="M18 5.2v13.6a.8.8 0 0 1-1.2.7l-10-6.8a.8.8 0 0 1 0-1.4l10-6.8A.8.8 0 0 1 18 5.2zM4 5h2v14H4z"
+          />
+        </symbol>
+        <symbol id="i-shuf" viewBox="0 0 24 24">
+          <path
+            d="M17.6 3.3 21 6.7l-3.4 3.4-1.4-1.4 1-1h-1.7c-1 0-1.9.5-2.4 1.300L8.600 16.300a4 4 0 0 1-3.400 1.900H3v-2h2.200c.7 0 1.400-.4 1.700-1l4.500-7.400A4 4 0 0 1 14.800 5.800h2.400l-1-1zm0 10.600L21 17.300l-3.400 3.400-1.400-1.400 1-1h-1.700a4 4 0 0 1-3.200-1.600l-1.200-1.600 1.200-1.900 1.600 2.100c.4.600 1 .9 1.600.9h1.700l-1-1zM3 5.800h2.200a4 4 0 0 1 3.100 1.500l1 1.400-1.200 2L7 8.900c-.4-.6-1-.9-1.800-.9H3z"
+          />
+        </symbol>
+        <symbol id="i-rep" viewBox="0 0 24 24">
+          <path
+            d="M3 11V9a4 4 0 0 1 4-4h10V2l4 4-4 4V7H7a2 2 0 0 0-2 2v2zm18 2v2a4 4 0 0 1-4 4H7v3l-4-4 4-4v3h10a2 2 0 0 0 2-2v-2z"
+          />
+        </symbol>
+        <symbol id="i-vol" viewBox="0 0 24 24">
+          <path
+            d="M11 5 6 9H2v6h4l5 4zm3.500 3.500a5 5 0 0 1 0 7l-1.400-1.400a3 3 0 0 0 0-4.200zM17.400 5.600a9 9 0 0 1 0 12.800l-1.400-1.400a7 7 0 0 0 0-10z"
+          />
+        </symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24">
+          <path
+            d="M12 21s-8-5.200-8-11a4.600 4.600 0 0 1 8-3 4.600 4.600 0 0 1 8 3c0 5.800-8 11-8 11z"
+          />
+        </symbol>
+        <symbol id="i-home" viewBox="0 0 24 24">
+          <path d="M12 3 2 11h3v9h5v-6h4v6h5v-9h3z" />
+        </symbol>
+        <symbol id="i-search" viewBox="0 0 24 24">
+          <path
+            d="M10.500 3a7.500 7.500 0 0 1 5.900 12.100l4.300 4.300-1.400 1.400-4.300-4.300A7.500 7.500 0 1 1 10.500 3zm0 2a5.500 5.500 0 1 0 0 11 5.500 5.500 0 0 0 0-11z"
+          />
+        </symbol>
+        <symbol id="i-lib" viewBox="0 0 24 24">
+          <path
+            d="M3 3h2v18H3zm5 0h2v18H8zm5.500.5 1.900-.5L20 20.400l-1.900.5z"
+          />
+        </symbol>
+        <symbol id="i-down" viewBox="0 0 24 24">
+          <path
+            d="M5.600 8.600 12 15l6.400-6.400 1.400 1.400L12 17.800 4.200 10z"
+          />
+        </symbol>
+        <symbol id="i-note" viewBox="0 0 24 24">
+          <path d="M9 3v12.300A3.500 3.500 0 1 0 11 18.500V8h8V3z" />
+        </symbol>
+        <symbol id="i-mic" viewBox="0 0 24 24">
+          <path
+            d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V21h2v-3.1A7 7 0 0 0 19 11z"
+          />
+        </symbol>
+      </defs>
+    </svg>
+
+    <nav class="side">
+      <div class="brand">
+        <i
+          ><svg><use href="#i-note" /></svg></i
+        >MusikKu
+      </div>
+      <a class="nav on"
+        ><svg><use href="#i-home" /></svg>Beranda</a
+      >
+      <a class="nav"
+        ><svg><use href="#i-search" /></svg>Cari</a
+      >
+      <a class="nav"
+        ><svg><use href="#i-lib" /></svg>Koleksi</a
+      >
+    </nav>
+
+    <main class="main">
+      <div class="stk" id="stk">
+        <div class="stk-in">
+          <div class="stk-art">
+            <svg><use href="#i-note" /></svg>
+          </div>
+          <b class="stk-name" id="pn2"></b>
+          <button class="big stk-play" id="bp2" aria-label="Putar">
+            <svg><use href="#i-play" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="hero">
+        <div class="art">
+          <svg><use href="#i-note" /></svg>
+        </div>
+        <div>
+          <small>PLAYLIST</small>
+          <h1 id="pn"></h1>
+          <p id="pi"></p>
+        </div>
+      </div>
+      <div class="bar">
+        <button class="big" id="bp" aria-label="Putar">
+          <svg><use href="#i-play" /></svg>
+        </button>
+        <label class="srch"
+          ><svg><use href="#i-search" /></svg
+          ><input id="q" placeholder="Cari lagu..." type="search"
+        /></label>
+      </div>
+      <div class="msg" id="ms"></div>
+      <div class="lst">
+        <div class="hd">
+          <span>#</span><span>Judul</span
+          ><span style="text-align: right">Durasi</span><span></span>
+        </div>
+        <div id="ls"></div>
+      </div>
+      <div class="lw"><div class="lc"></div></div>
+    </main>
+
+    <footer class="pl" id="pl">
+      <button class="cls" id="cl" aria-label="Tutup">
+        <svg><use href="#i-down" /></svg>
+      </button>
+      <div class="inf">
+        <div class="cv" id="pc"></div>
+        <div style="min-width: 0">
+          <b id="pt">Pilih lagu</b><span id="pa">—</span>
+        </div>
+      </div>
+      <div class="viz" id="vz"></div>
+      <div class="lw"><div class="lc"></div></div>
+      <div class="ctr">
+        <div class="btns">
+          <button class="ib x" id="sh" aria-label="Acak">
+            <svg><use href="#i-shuf" /></svg>
+          </button>
+          <button class="ib" id="pv" aria-label="Sebelumnya">
+            <svg><use href="#i-prev" /></svg>
+          </button>
+          <button class="ib pp" id="pp" aria-label="Putar">
+            <svg><use href="#i-play" /></svg>
+          </button>
+          <button class="ib" id="nx" aria-label="Berikutnya">
+            <svg><use href="#i-next" /></svg>
+          </button>
+          <button class="ib x" id="rp" aria-label="Ulangi">
+            <svg><use href="#i-rep" /></svg>
+          </button>
+        </div>
+        <div class="sk">
+          <span id="cu">0:00</span
+          ><input
+            type="range"
+            id="sb"
+            min="0"
+            max="100"
+            step="0.1"
+            value="0"
+            aria-label="Posisi"
+          /><span id="du">0:00</span>
+        </div>
+      </div>
+      <div class="vol">
+        <button class="ib" id="ly" aria-label="Lirik">
+          <svg><use href="#i-mic" /></svg>
+        </button>
+        <svg width="20" height="20"><use href="#i-vol" /></svg
+        ><input
+          type="range"
+          id="vl"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.8"
+          aria-label="Volume"
+        />
+      </div>
+    </footer>
+    <audio id="au" preload="metadata"></audio>
+
+    <script>
+      /* ============ PENGATURAN: EDIT BAGIAN INI ============ */
+      var PLAYLIST_NAME = "YUSUF'S PLAYLIST";
+      var PLAYLIST_COVER = "asset/PlaylistCover.webp";
+      var SONGS = [
+        /* Taruh file MP3 di folder "lagu" di samping file HTML ini, lalu daftarkan di sini.
+     cover (opsional): alamat gambar, misal "cover/lagu1.jpg" */
+        {
+          title: "See You Again",
+          artist: "Wiz Khalifa feat Charlie Puth",
+          src: "asset/Wiz_Khalifa_See_You_Again_(feat.Charlie_Puth).mp3",
+          cover: "asset/cover_mp3/seyouagain.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Blood Hands",
+          artist: "Royal Blood",
+          src: "asset/Royal_Blood_Blood_Hands.mp3",
+          cover: "asset/cover_mp3/blood_hands.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Count on Me",
+          artist: "Bruno Mars",
+          src: "asset/Bruno_Mars_Count_on_Me.mp3",
+          cover: "asset/cover_mp3/brunomars.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "She Will Be Loved",
+          artist: "Maroon 5",
+          src: "asset/Maroon_5_She_Will_Be_Loved.mp3",
+          cover: "asset/cover_mp3/she_will_be_loved.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Good Riddance",
+          artist: "Green Day",
+          src: "asset/Green_Day_Good_Riddance.mp3",
+          cover: "asset/cover_mp3/Good_Reddance.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Gala Bunga Matahari",
+          artist: "Sal Priadi",
+          src: "asset/Sal_Priadi_Gala_Bunga_Matahari.mp3",
+          cover: "asset/cover_mp3/Gala_Bunga_Matahari.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Memories",
+          artist: "Maroon 5",
+          src: "asset/Maroon_5_Memories.mp3",
+          cover: "asset/cover_mp3/Maroon_5_-_Memories.png",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Photograph",
+          artist: "Ed Sheeran",
+          src: "asset/Ed_Sheeran_Photograph.mp3",
+          cover: "asset/cover_mp3/cover.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Everybody's Changing",
+          artist: "Keane",
+          src: "asset/Keane_Everybody_s_Changing.mp3",
+          cover: "asset/cover_mp3/keane.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Location Unknown",
+          artist: "HONNE",
+          src: "asset/HONNE_Location_Unknown.mp3",
+          cover: "asset/cover_mp3/Honne.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Blurry",
+          artist: "Puddle Of Mudd",
+          src: "asset/Puddle_Of_Mudd_-_Blurry.mp3",
+          cover: "asset/cover_mp3/puddle.jpg",
+        },
+        {
+          title: "City Of Angel",
+          artist: "30 Second To Mars",
+          src: "asset/30_Second_to_mars_-_City_of_angel.mp3",
+          cover: "asset/cover_mp3/City_of_angels.jpg",
+          lrc: "asset/lirik/Thirty_Seconds_to_Mars_City_of_Angels.lrc",
+        },
+        {
+          title: "Jakarta Hari Ini",
+          artist: "For Revenge",
+          src: "asset/Jakarta_Hari_Ini_For_Revenge.mp3",
+          cover: "asset/cover_mp3/forevenge.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Closer To The Edge",
+          artist: "30 Second To Mars",
+          src: "asset/Thirty_Seconds_to_Mars_-_Closer_to_the_Edge.mp3",
+          cover: "asset/cover_mp3/30_Seconds_to_Mars-Closer_to_the_Edge_s.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Conindrum",
+          artist: "The S.I.G.I.T",
+          src: "asset/Conundrum.mp3",
+          cover: "asset/cover_mp3/Conundrum.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Dtourn",
+          artist: "The S.I.G.I.T",
+          src: "asset/The_S.I.G.I.T_-_D_tourn.mp3",
+          cover: "asset/cover_mp3/Conundrum.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Up and Down",
+          artist: "The S.I.G.I.T",
+          src: "asset/The_S.I.G.I.T._-_Up_and_Down.mp3",
+          cover: "asset/cover_mp3/up&down.jpg",
+          lrc: "asset/lirik/",
+        },
+        {
+          title: "Circus Travelling Show",
+          artist: "UTBBYS",
+          src: "asset/Circus_Travelling_Show.mp3",
+          cover: "asset/cover_mp3/utbbys.avif",
+        },
+      ];
+      /* ====================================================== */
+
+      var $ = function (i) {
+          return document.getElementById(i);
+        },
+        au = $("au"),
+        cur = -1,
+        shuf = false,
+        rep = 0,
+        liked = {};
+      var ic = function (n) {
+        return '<svg><use href="#i-' + n + '"/></svg>';
+      };
+      function fmt(s) {
+        if (!isFinite(s) || !s) return "0:00";
+        var m = Math.floor(s / 60),
+          x = Math.floor(s % 60);
+        return m + ":" + (x < 10 ? "0" : "") + x;
+      }
+      function grad(i) {
+        var a = ["#7b2cbf", "#02c39a", "#5a189a", "#06a77d"];
+        return (
+          "linear-gradient(135deg," + a[i % 4] + "," + a[(i + 1) % 4] + ")"
+        );
+      }
+      function cover(el, i) {
+        var s = SONGS[i];
+        el.style.backgroundImage = s.cover ? 'url("' + s.cover + '")' : grad(i);
+        el.style.backgroundSize = "cover";
+        el.style.backgroundRepeat = "no-repeat";
+        el.style.backgroundPosition = "center";
+      }
+      $("pn").textContent = PLAYLIST_NAME;
+      $("pn2").textContent = PLAYLIST_NAME;
+      if (PLAYLIST_COVER) {
+        var art = document.querySelector(".art");
+        art.innerHTML = "";
+        art.style.backgroundImage = 'url("' + PLAYLIST_COVER + '")';
+        art.style.backgroundSize = "contain";
+        art.style.backgroundRepeat = "no-repeat";
+        art.style.backgroundPosition = "center";
+        var art2 = document.querySelector(".stk-art");
+        art2.innerHTML = "";
+        art2.style.backgroundImage = 'url("' + PLAYLIST_COVER + '")';
+        art2.style.backgroundSize = "cover";
+        art2.style.backgroundRepeat = "no-repeat";
+        art2.style.backgroundPosition = "center";
+      }
+      $("pi").textContent = SONGS.length + " lagu";
+      function render() {
+        var f = $("q").value.toLowerCase(),
+          h = "";
+        SONGS.forEach(function (s, i) {
+          if (f && (s.title + s.artist).toLowerCase().indexOf(f) < 0) return;
+          var pl = i === cur && !au.paused;
+          h +=
+            '<div class="row' +
+            (i === cur ? " on" : "") +
+            '" data-i="' +
+            i +
+            '"><div class="n">' +
+            (pl ? ic("vol") : i + 1) +
+            '</div><div class="ti"><div class="cv"></div><div style="min-width:0"><b></b><span></span></div></div><div class="d">' +
+            (s.dur ? fmt(s.dur) : "") +
+            '</div><button class="like' +
+            (liked[i] ? " on" : "") +
+            '" data-l="' +
+            i +
+            '" aria-label="Suka">' +
+            ic("heart") +
+            "</button></div>";
+        });
+        $("ls").innerHTML = h;
+        document.querySelectorAll("#ls .row").forEach(function (r) {
+          var i = +r.dataset.i,
+            s = SONGS[i];
+          r.querySelector("b").textContent = s.title;
+          r.querySelector("span").textContent = s.artist;
+          cover(r.querySelector(".cv"), i);
+        });
+      }
+      $("ls").onclick = function (e) {
+        var l = e.target.closest(".like");
+        if (l) {
+          liked[l.dataset.l] = !liked[l.dataset.l];
+          render();
+          return;
+        }
+        var r = e.target.closest(".row");
+        if (r) {
+          play(+r.dataset.i);
+          openFull();
+        }
+      };
+      $("q").oninput = render;
+      function play(i) {
+        if (i === cur) {
+          au.paused ? au.play() : au.pause();
+          return;
+        }
+        cur = i;
+        var s = SONGS[i];
+        au.src = s.src;
+        $("pt").textContent = s.title;
+        $("pa").textContent = s.artist;
+        cover($("pc"), i);
+        loadLy(i);
+        if ("mediaSession" in navigator)
+          navigator.mediaSession.metadata = new MediaMetadata({
+            title: s.title,
+            artist: s.artist,
+            artwork: s.cover ? [{ src: s.cover }] : [],
+          });
+        au.play().catch(function () {});
+        render();
+      }
+      function next(auto) {
+        if (!SONGS.length) return;
+        var n;
+        if (shuf && SONGS.length > 1) {
+          do {
+            n = Math.floor(Math.random() * SONGS.length);
+          } while (n === cur);
+        } else {
+          n = cur + 1;
+          if (n >= SONGS.length) {
+            if (rep === 1 || !auto) n = 0;
+            else {
+              au.pause();
+              return;
+            }
+          }
+        }
+        cur = -1;
+        play(n);
+      }
+      function prev() {
+        if (au.currentTime > 3) {
+          au.currentTime = 0;
+          return;
+        }
+        var n = (cur - 1 + SONGS.length) % SONGS.length;
+        cur = -1;
+        play(n);
+      }
+      function tg() {
+        if (cur < 0) play(0);
+        else au.paused ? au.play() : au.pause();
+      }
+      $("pp").onclick = tg;
+      $("bp").onclick = function () {
+        tg();
+        openFull();
+      };
+      $("bp2").onclick = $("bp").onclick;
+      (function () {
+        var mn = document.querySelector(".main");
+        var hero = document.querySelector(".hero");
+        mn.addEventListener(
+          "scroll",
+          function () {
+            mn.classList.toggle("sc", mn.scrollTop > hero.offsetHeight - 10);
+          },
+          { passive: true },
+        );
+      })();
+      $("nx").onclick = function () {
+        next(false);
+      };
+      $("pv").onclick = prev;
+      $("sh").onclick = function () {
+        shuf = !shuf;
+        this.classList.toggle("on", shuf);
+      };
+      $("rp").onclick = function () {
+        rep = (rep + 1) % 3;
+        this.classList.toggle("on", rep > 0);
+      };
+      function setp(p) {
+        var h = ic(p ? "pause" : "play");
+        $("pp").innerHTML = h;
+        $("bp").innerHTML = h;
+        $("bp2").innerHTML = h;
+        document.body.classList.toggle("playing", !!p);
+      }
+      au.onplay = function () {
+        setupAnalyser();
+        if (actx && actx.state === "suspended") actx.resume();
+        setp(true);
+        render();
+      };
+      au.onpause = function () {
+        setp(false);
+        render();
+      };
+      au.onended = function () {
+        if (rep === 2) {
+          au.currentTime = 0;
+          au.play();
+        } else next(true);
+      };
+      au.onloadedmetadata = function () {
+        $("du").textContent = fmt(au.duration);
+        if (SONGS[cur]) SONGS[cur].dur = au.duration;
+        render();
+      };
+      au.onerror = function () {
+        var m = $("ms");
+        m.style.display = "block";
+        m.textContent =
+          "Lagu tidak bisa dimuat. Pastikan file “" +
+          (SONGS[cur] ? SONGS[cur].src : "") +
+          "” ada dan namanya sama persis dengan yang tertulis di kode.";
+      };
+      au.onplaying = function () {
+        $("ms").style.display = "none";
+      };
+      au.ontimeupdate = function () {
+        var p = au.duration ? (au.currentTime / au.duration) * 100 : 0;
+        $("sb").value = p;
+        $("sb").style.setProperty("--v", p + "%");
+        $("cu").textContent = fmt(au.currentTime);
+      };
+      $("sb").oninput = function () {
+        lastUser = 0;
+        if (au.duration) au.currentTime = (this.value / 100) * au.duration;
+      };
+      $("vl").oninput = function () {
+        au.volume = this.value;
+        this.style.setProperty("--v", this.value * 100 + "%");
+      };
+      au.volume = 0.8;
+      $("vl").style.setProperty("--v", "80%");
+      if ("mediaSession" in navigator) {
+        var ms = navigator.mediaSession;
+        ms.setActionHandler("play", function () {
+          au.play();
+        });
+        ms.setActionHandler("pause", function () {
+          au.pause();
+        });
+        ms.setActionHandler("nexttrack", function () {
+          next(false);
+        });
+        ms.setActionHandler("previoustrack", prev);
+      }
+      document.addEventListener("keydown", function (e) {
+        if (e.target.tagName === "INPUT") return;
+        if (e.code === "Space") {
+          e.preventDefault();
+          tg();
+        }
+        if (e.code === "ArrowRight") next(false);
+        if (e.code === "ArrowLeft") prev();
+      });
+      if (!SONGS.length) {
+        $("ms").style.display = "block";
+        $("ms").textContent =
+          "Belum ada lagu. Tambahkan di bagian SONGS pada kode.";
+      }
+      /* ===== Lirik berjalan (format LRC) =====
+         Tambah di tiap lagu (opsional): lrc: "asset/lirik/blurry.lrc"  atau  lyrics: "[00:12.50]baris..."
+         Kalau kosong, lirik dicari otomatis dari lrclib.net */
+      var LYRIC_OFFSET = 0; /* detik; naikkan jika lirik terasa telat, turunkan jika terlalu cepat */
+      var LY = [],
+        LYS = false,
+        li = -2,
+        lastUser = 0,
+        lyReq = 0;
+      function lcs() {
+        return document.querySelectorAll(".lc");
+      }
+      function lyMsg(t) {
+        LY = [];
+        LYS = false;
+        lcs().forEach(function (c) {
+          c.innerHTML = '<div class="lm"></div>';
+          c.firstChild.textContent = t;
+        });
+      }
+      function parseLRC(txt) {
+        var out = [];
+        txt.split(/\r?\n/).forEach(function (l) {
+          var re = /\[(\d+):(\d+(?:[.:]\d+)?)\]/g,
+            m,
+            ts = [],
+            end = 0;
+          while ((m = re.exec(l))) {
+            ts.push(+m[1] * 60 + parseFloat(m[2].replace(":", ".")));
+            end = re.lastIndex;
+          }
+          var tx = l
+            .slice(end)
+            .replace(/<[^>]*>/g, "")
+            .trim();
+          ts.forEach(function (t) {
+            out.push({ t: t, tx: tx });
+          });
+        });
+        return out.sort(function (a, b) {
+          return a.t - b.t;
+        });
+      }
+      function showLy(lines, synced, note) {
+        LY = lines;
+        LYS = synced;
+        li = -2;
+        lcs().forEach(function (c) {
+          c.innerHTML = "";
+          if (note) {
+            var n = document.createElement("div");
+            n.className = "lm";
+            n.textContent = note;
+            c.appendChild(n);
+          }
+          lines.forEach(function (L, k) {
+            var d = document.createElement("div");
+            d.className = "ll" + (synced ? "" : " plain");
+            d.textContent = L.tx || "♪";
+            d.dataset.k = k;
+            c.appendChild(d);
+          });
+          c.scrollTop = 0;
+        });
+        syncLy(true);
+      }
+      function applyLy(txt) {
+        var L = parseLRC(txt);
+        if (L.length) return showLy(L, true);
+        var P = txt.split(/\r?\n/).map(function (x) {
+          return { tx: x.trim() };
+        });
+        if (txt.trim()) showLy(P, false, "Lirik ini belum tersinkron waktu.");
+        else lyMsg("Lirik tidak ditemukan.");
+      }
+      function loadLy(i) {
+        var s = SONGS[i],
+          id = ++lyReq,
+          ck = "lrc:" + s.artist + "|" + s.title;
+        lyMsg("Memuat lirik…");
+        if (s.lyrics) return applyLy(s.lyrics);
+        try {
+          var c = localStorage.getItem(ck);
+          if (c) return applyLy(c);
+        } catch (e) {}
+        function online() {
+          var u =
+            "https://lrclib.net/api/search?track_name=" +
+            encodeURIComponent(s.title) +
+            "&artist_name=" +
+            encodeURIComponent(s.artist);
+          fetch(u)
+            .then(function (r) {
+              return r.json();
+            })
+            .then(function (a) {
+              if (id !== lyReq) return;
+              var d = s.dur || au.duration || 0,
+                best = null,
+                bd = 1e9,
+                plain = null;
+              a.forEach(function (x) {
+                if (!plain && x.plainLyrics) plain = x.plainLyrics;
+                if (!x.syncedLyrics) return;
+                var df = d && x.duration ? Math.abs(x.duration - d) : 0;
+                if (df < bd) {
+                  bd = df;
+                  best = x;
+                }
+              });
+              if (best && bd <= 10) {
+                try {
+                  localStorage.setItem(ck, best.syncedLyrics);
+                } catch (e) {}
+                applyLy(best.syncedLyrics);
+              } else if (plain) applyLy(plain);
+              else lyMsg("Lirik tidak ditemukan.");
+            })
+            .catch(function () {
+              if (id === lyReq)
+                lyMsg("Lirik tidak bisa dimuat (cek koneksi internet).");
+            });
+        }
+        if (s.lrc)
+          fetch(s.lrc)
+            .then(function (r) {
+              if (!r.ok) throw 0;
+              return r.text();
+            })
+            .then(function (t) {
+              if (id === lyReq) applyLy(t);
+            }, online);
+        else online();
+      }
+      function syncLy(force) {
+        if (!LYS || !LY.length) return;
+        var t = au.currentTime + LYRIC_OFFSET + 0.15,
+          a = 0,
+          b = LY.length - 1,
+          idx = -1;
+        while (a <= b) {
+          var m = (a + b) >> 1;
+          if (LY[m].t <= t) {
+            idx = m;
+            a = m + 1;
+          } else b = m - 1;
+        }
+        if (idx === li && !force) return;
+        li = idx;
+        lcs().forEach(function (c) {
+          var ls = c.querySelectorAll(".ll");
+          ls.forEach(function (e, k) {
+            e.classList.toggle("on", k === idx);
+            e.classList.toggle("past", k < idx);
+          });
+          var e = ls[Math.max(idx, 0)];
+          if (!e || !c.offsetParent || (!force && Date.now() - lastUser < 3000))
+            return;
+          c.scrollTo({
+            top: e.offsetTop - c.clientHeight / 2 + e.offsetHeight / 2,
+            behavior: force ? "auto" : "smooth",
+          });
+        });
+      }
+      lcs().forEach(function (c) {
+        ["wheel", "touchstart", "touchmove"].forEach(function (ev) {
+          c.addEventListener(
+            ev,
+            function () {
+              lastUser = Date.now();
+            },
+            { passive: true },
+          );
+        });
+        c.onclick = function (e) {
+          var l = e.target.closest(".ll");
+          if (l && LYS) {
+            au.currentTime = Math.max(0, LY[+l.dataset.k].t - LYRIC_OFFSET);
+            lastUser = 0;
+            if (au.paused) au.play();
+          }
+        };
+      });
+      $("ly").onclick = function () {
+        var on = !document.body.classList.contains("ly");
+        document.body.classList.toggle("ly", on);
+        $("pl").classList.toggle("ly", on);
+        this.classList.toggle("on", on);
+        syncLy(true);
+      };
+      lyMsg("Pilih lagu untuk menampilkan lirik.");
+
+      /* Tampilan penuh (mobile) + grafik suara */
+      var mq = window.matchMedia("(max-width:820px)"),
+        pl = $("pl"),
+        vz = $("vz"),
+        bars = [],
+        vals = [],
+        N = 30;
+      for (var k = 0; k < N; k++) {
+        var b = document.createElement("i");
+        vz.appendChild(b);
+        bars.push(b);
+        vals.push(0.04);
+      }
+      function openFull() {
+        if (mq.matches) pl.classList.add("full");
+        syncLy(true);
+      }
+      $("cl").onclick = function () {
+        pl.classList.remove("full");
+      };
+      document.querySelector(".inf").onclick = function () {
+        if (mq.matches && cur >= 0) openFull();
+      };
+      mq.onchange = function () {
+        if (!mq.matches) pl.classList.remove("full");
+        syncLy(true);
+      };
+      /* Analisis audio asli (aktif jika dibuka lewat http/https, bukan file://) */
+      var actx = null,
+        an = null,
+        fdata = null,
+        useReal = false;
+      function setupAnalyser() {
+        if (actx || !/^https?:$/.test(location.protocol)) return;
+        try {
+          if (new URL(au.src, location.href).origin !== location.origin) return;
+          var AC = window.AudioContext || window.webkitAudioContext;
+          actx = new AC();
+          an = actx.createAnalyser();
+          an.fftSize = 256;
+          an.smoothingTimeConstant = 0.75;
+          var node = actx.createMediaElementSource(au);
+          node.connect(an);
+          an.connect(actx.destination);
+          fdata = new Uint8Array(an.frequencyBinCount);
+          useReal = true;
+        } catch (e) {
+          actx = null;
+          useReal = false;
+        }
+      }
+      function frame(t) {
+        syncLy();
+        if (pl.classList.contains("full")) {
+          var on = !au.paused && !au.ended,
+            beat = 1 + 0.3 * Math.sin(t / 180);
+          if (useReal && on) an.getByteFrequencyData(fdata);
+          for (var i = 0; i < N; i++) {
+            var tv;
+            if (!on) tv = 0.04;
+            else if (useReal) {
+              var lo = Math.floor(Math.pow(i / N, 1.8) * 70) + 1,
+                hi = Math.floor(Math.pow((i + 1) / N, 1.8) * 70) + 2,
+                sum = 0;
+              for (var j = lo; j < hi; j++) sum += fdata[j];
+              tv = Math.min(1, Math.pow(sum / (hi - lo) / 255, 1.2) * 1.15);
+            } else {
+              var env = 0.3 + 0.7 * Math.sin((Math.PI * (i + 0.5)) / N);
+              tv = env * beat * (0.2 + 0.8 * Math.random());
+            }
+            var k2 = !on ? 0.12 : tv > vals[i] ? 0.55 : 0.18;
+            vals[i] += (tv - vals[i]) * k2;
+            bars[i].style.transform =
+              "scaleY(" + Math.max(0.04, Math.min(1, vals[i])) + ")";
+          }
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+      render();
+    </script>
+  </body>
+</html>
